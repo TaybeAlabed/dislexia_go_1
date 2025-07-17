@@ -1,3 +1,5 @@
+import 'package:dislexia_go/BolumlerSayfasi.dart';
+import 'package:dislexia_go/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -61,6 +63,7 @@ Ne diyelim, akılsız başın cezasını kişinin kendisi çekermiş. Onlar da �
         timer.cancel();
       }
     });
+    SesYonetici.durdur();
   }
 
   @override
@@ -125,9 +128,9 @@ bool mic=true;
           Positioned(
             left: 10,
             top: 10,
-            child: IconButton(icon: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.black,),onPressed: (){
+            child: IconButton(icon: Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){
 
-              Navigator.pop(context);
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
 
             },
             ),

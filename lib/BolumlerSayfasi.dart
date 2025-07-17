@@ -1,3 +1,5 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:dislexia_go/Ayarlar.dart';
 import 'package:dislexia_go/OkumaMetniSayfasi.dart';
 import 'package:dislexia_go/HarfTanimaSayfasi.dart';
 import 'package:dislexia_go/HikayeTiyatroSayfasi.dart';
@@ -5,11 +7,25 @@ import 'package:dislexia_go/ResimEslestirme.dart';
 import 'package:dislexia_go/OrtonHeceSayfasi.dart';
 import 'package:dislexia_go/FernaldSayfasi.dart';
 import 'package:dislexia_go/main.dart';
+import 'package:dislexia_go/ritmik_yazi_ve_okuma_sayfasi.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BolumlerSayfasi extends StatelessWidget {
+class BolumlerSayfasi extends StatefulWidget {
   const BolumlerSayfasi({super.key});
+
+  @override
+  State<BolumlerSayfasi> createState() => _BolumlerSayfasiState();
+}
+
+class _BolumlerSayfasiState extends State<BolumlerSayfasi> {
+  @override
+  void initState() {
+    super.initState();
+
+    SesYonetici.baslat("anasayfavebolumler.mp3");
+
+  }
 
   Future<void> cikisYap(BuildContext context) async {
     var sp = await SharedPreferences.getInstance();
@@ -31,15 +47,17 @@ class BolumlerSayfasi extends StatelessWidget {
       "Hikaye Tiyatrosu",
       "Okuma Metni Yardımcısı",
       "Kelimenin Doğrusunu bul",
-      "Kelime Eşleştir"
+      "Resim Eşleştir",
+      "Ritmik Yaz ve Oku"
     ];
     final resimler = [
       "Arkaplan2.png",
       "arkaplan3.png",
       "Harfler.png",
       "Kitap.png",
-      "5.png",
-      "resimeslestir.png"
+      "sesilecalisalim.png",
+      "resimeslestir.png",
+      "frekansayir.png"
     ];
 
     return Scaffold(
@@ -55,15 +73,13 @@ class BolumlerSayfasi extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('Hakkında'),
-              onTap: () {
-                // TODO: Hakkında sayfasına yönlendirme
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Ayarlar'),
               onTap: () {
-                Navigator.pushNamed(context, "/ayarlar");
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>AyarlarSayfasi()));
               },
             ),
           ],
@@ -100,7 +116,7 @@ class BolumlerSayfasi extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
-                width: 220, // Yarı boyut
+                width: 220,
                 height: 220,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -110,31 +126,43 @@ class BolumlerSayfasi extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     padding: const EdgeInsets.all(8),
-                    elevation: 6,
+                    elevation: 7,
                   ),
                   onPressed: () {
                     switch (index) {
                       case 0:
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrtonHeceSayfasi()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => OrtonHeceSayfasi()));
+
                         break;
                       case 1:
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  HarfTanimaSayfasi()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => HarfTanimaSayfasi()));
                         break;
                       case 2:
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  HikayeTiyatroSayfasi()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => HikayeTiyatroSayfasi()));
                         break;
                       case 3:
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  OkumaMetniSayfasi()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => OkumaMetniSayfasi()));
                         break;
                       case 4:
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  FernaldSayfasi()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => FernaldSayfasi()));
+
                         break;
                       case 5:
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  ResimEslestirme()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => ResimEslestirme()));
+                        break;
+                      case 6:
+
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => RitmikYaziOkumaSayfasi()));
                         break;
                     }
                   },
-
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -164,5 +192,6 @@ class BolumlerSayfasi extends StatelessWidget {
     );
   }
 }
+
 
 

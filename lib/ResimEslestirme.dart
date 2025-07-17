@@ -1,4 +1,5 @@
 import 'package:dislexia_go/BolumlerSayfasi.dart';
+import 'package:dislexia_go/main.dart';
 import 'package:flutter/material.dart';
 
 class ResimEslestirme extends StatefulWidget {
@@ -21,7 +22,12 @@ class _ResimEslestirmeState extends State<ResimEslestirme> {
     {"isim": "top", "resim": "resimler/Figurler/top.png", "golge": "resimler/Figurler/topGolge.png"},
     {"isim": "yilan", "resim": "resimler/Figurler/yilan.png", "golge": "resimler/Figurler/yilanGolge.png"},
   ];
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SesYonetici.durdur();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +44,7 @@ class _ResimEslestirmeState extends State<ResimEslestirme> {
 
           Column(
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 35),
 
               Expanded(
                 child: GridView.count(
@@ -140,6 +146,14 @@ class _ResimEslestirmeState extends State<ResimEslestirme> {
 
               const SizedBox(height: 20),
             ],
+          ),
+          Positioned(
+            left: 10,
+            top: 10,
+            child: IconButton(
+              onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi())),
+              icon:  Icon(Icons.arrow_back,color: Colors.black,),
+            ),
           ),
         ],
       ),

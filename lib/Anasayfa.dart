@@ -159,6 +159,7 @@ class _TMaskotState extends State<TMaskot> with SingleTickerProviderStateMixin {
       }
       return mounted;
     });
+    SesYonetici.aktifDosya;
   }
 
   @override

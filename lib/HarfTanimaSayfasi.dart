@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:dislexia_go/BolumlerSayfasi.dart';
+import 'package:dislexia_go/main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -40,7 +42,8 @@ class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios_new_outlined),
               onPressed: (){
-                Navigator.pop(context);
+                
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BolumlerSayfasi()));
               },
             ),
           ),
@@ -272,6 +275,7 @@ class _AnimatedTkolState extends State<AnimatedTkol> with SingleTickerProviderSt
     _rotationAnim = Tween<double>(begin: 0.0, end: 0.4).animate(
         CurvedAnimation(parent: _controller, curve: Curves.easeInOut)
     );
+    SesYonetici.durdur();
   }
 
   @override

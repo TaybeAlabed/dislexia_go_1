@@ -1,3 +1,5 @@
+import 'package:dislexia_go/BolumlerSayfasi.dart';
+import 'package:dislexia_go/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -5,14 +7,18 @@ import 'package:flutter/material.dart';
 
 class HikayeTiyatroSayfasi extends StatefulWidget {
   const HikayeTiyatroSayfasi({super.key});
-
   @override
   State<HikayeTiyatroSayfasi> createState() => _HikayeTiyatroSayfasiState();
 }
 bool baslatDurdur=false;
 class _HikayeTiyatroSayfasiState extends State<HikayeTiyatroSayfasi> {
   @override
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SesYonetici.durdur();
+  }
   Widget build(BuildContext context) {
     var yukseklik=MediaQuery.of(context).size.height;
     var genislik=MediaQuery.of(context).size.width;
@@ -64,7 +70,8 @@ class _HikayeTiyatroSayfasiState extends State<HikayeTiyatroSayfasi> {
                 child: IconButton(
                   icon: Icon(Icons.arrow_back_ios_new_outlined),
                   onPressed: (){
-                    Navigator.pop(context);
+
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
                   },
                 ),
               ),

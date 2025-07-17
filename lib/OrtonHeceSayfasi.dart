@@ -2,6 +2,8 @@ import 'package:dislexia_go/BolumlerSayfasi.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'main.dart';
+
 class OrtonHeceSayfasi extends StatefulWidget {
   const OrtonHeceSayfasi({super.key});
 
@@ -57,10 +59,18 @@ class _OrtonHeceSayfasiState extends State<OrtonHeceSayfasi> with TickerProvider
   late Animation<double> _rotationAnimation;
   late double genislik;
   late double yukseklik;
-  @override
+
   @override
   void initState() {
     super.initState();
+
+
+     SesYonetici.durdur();
+
+
+     SesYonetici.baslat("orton.mp3");
+
+
 
     tumKelimeHeceleri.shuffle();
     aktifKelimeHeceleri = tumKelimeHeceleri.take(5).toList();
@@ -75,7 +85,6 @@ class _OrtonHeceSayfasiState extends State<OrtonHeceSayfasi> with TickerProvider
       CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
     );
 
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final boyut = MediaQuery.of(context).size;
       setState(() {
@@ -83,6 +92,7 @@ class _OrtonHeceSayfasiState extends State<OrtonHeceSayfasi> with TickerProvider
       });
     });
   }
+
 
 
   void _setupForKelime() {
@@ -221,7 +231,6 @@ class _OrtonHeceSayfasiState extends State<OrtonHeceSayfasi> with TickerProvider
     return Scaffold(
       body: Stack(
         children: [
-
           Positioned.fill(
             child: Image.asset(
               "resimler/OkumaMetniSayfasiArkaPlan.png",
@@ -268,7 +277,15 @@ class _OrtonHeceSayfasiState extends State<OrtonHeceSayfasi> with TickerProvider
             ),
           ),
 
-
+Positioned(
+  left: 10,
+  top: 10,
+  child: IconButton( icon: Icon(Icons.arrow_back,color: Colors.black,),
+  onPressed: (){
+    SesYonetici.durdur();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
+  },
+),),
           Positioned(
             left: cekicKonum.dx,
             top: cekicKonum.dy,
@@ -296,6 +313,7 @@ class _OrtonHeceSayfasiState extends State<OrtonHeceSayfasi> with TickerProvider
               ),
             ),
           ),
+
         ],
       ),
     );
