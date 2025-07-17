@@ -2,7 +2,7 @@
 import 'package:dislexia_go/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+//Bu sayfa geçiş ekranı taybe
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
