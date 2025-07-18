@@ -6,9 +6,14 @@
   import 'package:shared_preferences/shared_preferences.dart';
   import 'package:audioplayers/audioplayers.dart';
   import 'package:path/path.dart';
+  import 'package:supabase_flutter/supabase_flutter.dart';
 
   void main() async {
     WidgetsFlutterBinding.ensureInitialized();
+    await Supabase.initialize(
+      url: 'https://grrsvfejfucowhmkzoeo.supabase.co',
+      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdycnN2ZmVqZnVjb3dobWt6b2VvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3ODgzNTQsImV4cCI6MjA2ODM2NDM1NH0.9aT1XbJl6zpFUjETnAc_PT_yWmnIIjGR1w28QoCMs9U',
+      );
     final sp = await SharedPreferences.getInstance();
     final renkStr = sp.getString("temaRenk") ?? "deepPurpleAccent";
     final temaRenk = renkStr == "blueAccent" ? Colors.blueAccent : Colors.deepPurpleAccent;
