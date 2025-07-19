@@ -48,17 +48,60 @@ class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
             ),
           ),
           Positioned(
-            right: ekranGenisligi * 0.4,
-            bottom: ekranYuksekligi * 0.5,
+            left: ekranGenisligi/2-125,
+            bottom: ekranYuksekligi/2.1,
             child: AnimatedTkol(),
           ),
 
           Positioned(
-            left: ekranGenisligi/2-125,
+            left: ekranGenisligi/2-250,
             top: 100,
             child: SizedBox(
                 width: 250,
                 child: TMaskot()),
+          ),
+
+
+          Positioned(
+            left: ekranGenisligi/2,
+            top: ekranYuksekligi/3,
+            child: Column(
+              children: [
+                ElevatedButton(
+
+                  child: Text("Kelime Türetmece Oynayalım",style: TextStyle(color: Colors.black),),
+                  onPressed: (){
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white70,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  child: Text("Tabu Oynayalım",style: TextStyle(color: Colors.black),),
+                  onPressed: (){
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white70,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  child: Text("Hikaye Dinlemek İstiyorum",style: TextStyle(color: Colors.black),),
+                  onPressed: (){
+                  },style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white70,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                ),
+              ],
+            ),
           ),
 
         ],

@@ -304,14 +304,18 @@ class _FernaldSayfasiState extends State<FernaldSayfasi> with TickerProviderStat
               )
             ],
           ),
-          IconButton( icon: Icon(Icons.arrow_back),
-          onPressed: (){
-            _tempoTimer?.cancel();
-            _player.stop();
-            _anlatimPlayer.stop();
-            Navigator.pop(context);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
-          },
+          Positioned(
+            left: 10,
+            top: 10,
+            child: IconButton( icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              _tempoTimer?.cancel();
+              _player.stop();
+              _anlatimPlayer.stop();
+
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
+            },
+            ),
           ),
         ],
       ),

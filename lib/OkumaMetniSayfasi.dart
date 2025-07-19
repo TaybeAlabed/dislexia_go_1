@@ -27,7 +27,7 @@ class _OkumaMetniSayfasiState extends State<OkumaMetniSayfasi> {
   late SesKayitYonetici sesKayitYonetici;
   late FlutterTts flutterTts;
 
-  bool konusuyorMu = false; // sınıf içinde tanımlanmalı
+  bool konusuyorMu = false; // sınıf içinde tanımlanmalı 
 
 
   @override

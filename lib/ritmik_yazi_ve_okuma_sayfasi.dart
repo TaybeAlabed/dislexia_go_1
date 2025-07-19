@@ -22,83 +22,88 @@ class _RitmikYaziOkumaSayfasiState extends State<RitmikYaziOkumaSayfasi> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurpleAccent,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Stack(
-          children: [
-            Image.asset("resimler/OkumaMetniSayfasiArkaPlan.png"),
-            Positioned(
-              child: IconButton(
-                icon: Icon(Icons.arrow_back,color: Colors.white,),
-                onPressed: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
-                },
-              ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              "resimler/OkumaMetniSayfasiArkaPlan.png",
+              fit: BoxFit.cover,
             ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+          ),
+          Positioned(
+            left: 10,
+            top: 10,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back,color: Colors.black,),
+              onPressed: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BolumlerSayfasi()));
+              },
+            ),
+          ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
 
-                    Text(" Ritmik Yazı ve Okuma  ",style: TextStyle(fontSize: 25,color: Colors.white),),
-                    Icon(Icons.queue_music,size: 40 ,color: Colors.white,),
+                  Text(" Ritmik Yazı ve Okuma  ",style: TextStyle(fontSize: 25,color: Colors.white),),
+                  Icon(Icons.queue_music,size: 40 ,color: Colors.white,),
+                ],
+              ),
+
+              const SizedBox(height: 10),
+              const Text(
+                "Aşağıdaki etkinliklerden birini seçerek ritim eşliğinde yazma ve okuma becerilerini geliştirebilirsin!",
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 30),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2/1,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 10,
+                  children: [
+                    _buildMiniGameCard(
+                      context,
+                      title: "Sesi Sırala",
+                      icon: Icons.music_note,
+                      color: Colors.orangeAccent,
+                      onTap: () {
+                         Navigator.push(context, MaterialPageRoute(builder: (_) => SesPerdeGelistirilmisSayfa()));
+                      },
+                    ),
+
+                    _buildMiniGameCard(
+                      context,
+                      title: "Ritmi Tekrarla",
+                      icon: Icons.animation,
+                      color: Colors.pinkAccent,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => Harfdansisayfasi()));
+                      },
+                    ),
                   ],
                 ),
-
-                const SizedBox(height: 10),
-                const Text(
-                  "Aşağıdaki etkinliklerden birini seçerek ritim eşliğinde yazma ve okuma becerilerini geliştirebilirsin!",
-                  style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "🧠 Bilgi: Ritim ve tempo temelli çalışmalar, beynin dil ve dikkat merkezlerini destekler. Bu bölümde eğlenirken öğrenmeyi deneyimle!",
+                  style: TextStyle(fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 30),
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 4,
-                    childAspectRatio: 2/1.5,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: [
-                      _buildMiniGameCard(
-                        context,
-                        title: "Sesi Sırala",
-                        icon: Icons.music_note,
-                        color: Colors.orangeAccent,
-                        onTap: () {
-                           Navigator.push(context, MaterialPageRoute(builder: (_) => SesPerdeGelistirilmisSayfa()));
-                        },
-                      ),
+              ),
+            ],
+          ),
 
-                      _buildMiniGameCard(
-                        context,
-                        title: "Ritmi Tekrarla",
-                        icon: Icons.animation,
-                        color: Colors.pinkAccent,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => Harfdansisayfasi()));
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade100,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    "🧠 Bilgi: Ritim ve tempo temelli çalışmalar, beynin dil ve dikkat merkezlerini destekler. Bu bölümde eğlenirken öğrenmeyi deneyimle!",
-                    style: TextStyle(fontSize: 14),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

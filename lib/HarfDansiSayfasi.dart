@@ -1,3 +1,4 @@
+import 'package:dislexia_go/ritmik_yazi_ve_okuma_sayfasi.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
@@ -79,7 +80,7 @@ class _HarfdansisayfasiState extends State<Harfdansisayfasi> with TickerProvider
 
     int index = tumHarfler.indexOf(harf);
     _controllers[index].forward(from: 0);
-   await _player.play(AssetSource('harf_sesleri/${harf}.mp3'));
+    _player.play(AssetSource('harf_sesleri/${harf}.mp3'));
 
     if (kullaniciSecim.length == hedefSira.length) {
       if (_listelerEsitMi(hedefSira, kullaniciSecim)) {
@@ -126,11 +127,10 @@ class _HarfdansisayfasiState extends State<Harfdansisayfasi> with TickerProvider
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RitmikYaziOkumaSayfasi()));
               },
               child: const Text("Bitir"),
             ),
-
           ],
 
         );
@@ -219,10 +219,16 @@ class _HarfdansisayfasiState extends State<Harfdansisayfasi> with TickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Harf Dansı"), backgroundColor: Colors.deepPurple),
+
       backgroundColor: const Color(0xFFF3E5F5),
       body: Stack(
         children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'resimler/OkumaMetniSayfasiArkaPlan.png', // kendi dosya yolunu koy
+              fit: BoxFit.cover,
+            ),
+          ),
           Center(
             child: Wrap(
               alignment: WrapAlignment.center,
@@ -231,12 +237,22 @@ class _HarfdansisayfasiState extends State<Harfdansisayfasi> with TickerProvider
           ),
           Positioned(
             right: 10,
-            top: 10,
+            top: 20,
             child: TextButton(
               onPressed: () {
                 _siraliSesTanitim();
               },
               child: const Text("🔁 Değiştir"),
+            ),
+          ),
+          Positioned(
+            left: 10,
+            top: 10,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back,color: Colors.black,),
+              onPressed: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RitmikYaziOkumaSayfasi()));
+              },
             ),
           ),
         ],

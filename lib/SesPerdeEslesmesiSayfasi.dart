@@ -1,3 +1,4 @@
+import 'package:dislexia_go/ritmik_yazi_ve_okuma_sayfasi.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:math';
@@ -215,129 +216,153 @@ class _SesPerdeGelistirilmisSayfaState extends State<SesPerdeGelistirilmisSayfa>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Text(
-                      "Ses Perde - Seviye $seviye",
-                      style: const TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    const SizedBox(height: 10),
-                    if (ilerlemeMesaji.isNotEmpty)
-                      Text(ilerlemeMesaji, style: TextStyle(color: Colors.white, fontSize: 14)),
-                    if (tanitimMesaji != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          tanitimMesaji!,
-                          style: TextStyle(color: Colors.amberAccent, fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    const SizedBox(height: 20),
-                    if (tanitimModu && seviye == 1)
-                      ElevatedButton(
-                        onPressed: sesTanitimOynat,
-                        child: Text("🎧 Tanıtım Seslerini Dinle"),
-                      )
-                    else
-                      ElevatedButton(
-                        onPressed: () {
-                          if (seviye == 1) tekliSesCal();
-                          else if (seviye == 2) cokluSesCal();
-                          else if (seviye == 3) seviye3SesCal();
-                        },
-                        child: Text(seviye == 1 ? "Sesi Çal" : "Sesleri Oynat"),
-                      ),
-                    const SizedBox(height: 20),
-                    if (!tanitimModu)
-                      (seviye == 1)
-                          ? Column(
-                        children: List.generate(3, (i) {
-                          Color renk = Colors.black45;
-                          if (cevaplandi) {
-                            if (i == aktifSesIndex && !dogruMu) {
-                              renk = Colors.green;
-                            } else if (i == kullaniciSecimi && !dogruMu) {
-                              renk = Colors.red;
-                            } else if (i == aktifSesIndex && dogruMu) {
-                              renk = Colors.green;
-                            }
-                          }
-                          return ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: renk),
-                            onPressed: cevaplandi ? null : () => kontrolEtTekli(i),
-                            child: Text(secenekEtiketleri[i]),
-                          );
-                        }),
-                      )
-                          : Column(
-                        children: seceneklerSirali.map((liste) {
-                          bool dogruCevap = listEquals(liste, dogruCokluSecim);
-                          bool secilenMi = listEquals(liste, kullaniciCokluSecim);
-                          Color renk = Colors.black45;
-                          if (cevaplandi) {
-                            if (dogruCevap) renk = Colors.green;
-                            else if (secilenMi && !dogruCevap) renk = Colors.red;
-                          }
-                          return ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: renk),
-                            onPressed: cevaplandi ? null : () => kontrolEtCoklu(liste),
-                            child: Text(liste.map((e) => secenekEtiketleri[e]).join(" → ")),
-                          );
-                        }).toList(),
-                      ),
-                    const SizedBox(height: 20),
-                    if (cevaplandi)
-                      Column(
-                        children: [
-                          Text(
-                            dogruMu ? "✅ Doğru!" : "❌ Yanlış!",
-                            style: TextStyle(
-                                color: dogruMu ? Colors.greenAccent : Colors.redAccent,
-                                fontSize: 20),
-                          ),
-                          if (yanlisSayac >= 5)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                "🌟 Harika çabalıyorsun! Denemeye devam et, başarı yakın!",
-                                style: TextStyle(color: Colors.amberAccent, fontSize: 16),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                        ],
-                      ),
-                  ],
-                ),
-              ),
+      // Scaffold'un rengini temizle, çünkü artık resim olacak
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          // ARKA PLAN RESMİ
+          SizedBox.expand(
+            child: Image.asset(
+              'resimler/OkumaMetniSayfasiArkaPlan.png', // kendi dosya yolunu koy
+              fit: BoxFit.cover,
             ),
-            if (seviye == 1 && !tanitimModu)
-              Positioned(
-                top: 25,
-                right: 15,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent),
-                  onPressed: () {
-                    setState(() {
-                      tanitimModu = true;
-                    });
-                    sesTanitimOynat();
-                  },
-                  child: Text("Tanıtımı Tekrar Dinle"),
+          ),
+
+          // MEVCUT TÜM KODLAR – HİÇ DEĞİŞMEDİ
+          SingleChildScrollView(
+            child: Stack(
+              children: [
+                Center(
+                  child: Padding(
+                    padding:  EdgeInsets.only(top: 60),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Ses Perde - Seviye $seviye",
+                          style: const TextStyle(fontSize: 24, color: Colors.black),
+                        ),
+                        const SizedBox(height: 10),
+                        if (ilerlemeMesaji.isNotEmpty)
+                          Text(ilerlemeMesaji, style: TextStyle(color: Colors.black, fontSize: 14)),
+                        if (tanitimMesaji != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              tanitimMesaji!,
+                              style: TextStyle(color: Colors.amberAccent, fontSize: 16),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        const SizedBox(height: 10),
+                        if (tanitimModu && seviye == 1)
+                          ElevatedButton(
+                            onPressed: sesTanitimOynat,
+                            child: Text("🎧 Tanıtım Seslerini Dinle"),
+                          )
+                        else
+                          ElevatedButton(
+                            onPressed: () {
+                              if (seviye == 1) tekliSesCal();
+                              else if (seviye == 2) cokluSesCal();
+                              else if (seviye == 3) seviye3SesCal();
+                            },
+                            child: Text(seviye == 1 ? "Sesi Çal" : "Sesleri Oynat"),
+                          ),
+                        const SizedBox(height: 10),
+                        if (!tanitimModu)
+                          (seviye == 1)
+                              ? Column(
+                            children: List.generate(3, (i) {
+                              Color renk = Colors.black45;
+                              if (cevaplandi) {
+                                if (i == aktifSesIndex && !dogruMu) {
+                                  renk = Colors.green;
+                                } else if (i == kullaniciSecimi && !dogruMu) {
+                                  renk = Colors.red;
+                                } else if (i == aktifSesIndex && dogruMu) {
+                                  renk = Colors.green;
+                                }
+                              }
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: renk),
+                                onPressed: cevaplandi ? null : () => kontrolEtTekli(i),
+                                child: Text(secenekEtiketleri[i]),
+                              );
+                            }),
+                          )
+                              : Column(
+                            children: seceneklerSirali.map((liste) {
+                              bool dogruCevap = listEquals(liste, dogruCokluSecim);
+                              bool secilenMi = listEquals(liste, kullaniciCokluSecim);
+                              Color renk = Colors.black45;
+                              if (cevaplandi) {
+                                if (dogruCevap) renk = Colors.green;
+                                else if (secilenMi && !dogruCevap) renk = Colors.red;
+                              }
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: renk),
+                                onPressed: cevaplandi ? null : () => kontrolEtCoklu(liste),
+                                child: Text(liste.map((e) => secenekEtiketleri[e]).join(" → ")),
+                              );
+                            }).toList(),
+                          ),
+                        const SizedBox(height: 20),
+                        if (cevaplandi)
+                          Column(
+                            children: [
+                              Text(
+                                dogruMu ? "✅ Doğru!" : "❌ Yanlış!",
+                                style: TextStyle(
+                                    color: dogruMu ? Colors.greenAccent : Colors.redAccent,
+                                    fontSize: 20),
+                              ),
+                              if (yanlisSayac >= 5)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    "🌟 Harika çabalıyorsun! Denemeye devam et, başarı yakın!",
+                                    style: TextStyle(color: Colors.amberAccent, fontSize: 16),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-          ],
-        ),
+                if (seviye == 1 && !tanitimModu)
+                  Positioned(
+                    top: 25,
+                    right: 15,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent),
+                      onPressed: () {
+                        setState(() {
+                          tanitimModu = true;
+                        });
+                        sesTanitimOynat();
+                      },
+                      child: Text("Tanıtımı Tekrar Dinle"),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Positioned(
+            left: 10,
+            top: 10,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back,color: Colors.black,),
+              onPressed: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RitmikYaziOkumaSayfasi()));
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
+
 }
