@@ -1,5 +1,7 @@
 import 'dart:math';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:dislexia_go/BolumlerSayfasi.dart';
 import 'package:dislexia_go/main.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,43 @@ class HarfTanimaSayfasi extends StatefulWidget {
 }
 
 class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
-
   double _hammerTop = 350;
   double _hammerLeft = 330;
+
+  final FlutterTts flutterTts = FlutterTts();
+
+  Future<void> kelimeTuretChatbot() async {
+    const String baseUrl = 'http://localhost:11434';
+    final String prompt = "Birlikte Kelime Türetme Oyunu oynayalım. Sen bir harf ver, ben onunla kelime türeteyim.";
+
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/generate'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'model': 'gemma:3n-e4b',
+          'prompt': prompt,
+          'stream': false,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final String yanit = data['response'] ?? "Yanıt alınamadı.";
+
+        await flutterTts.setLanguage("tr-TR");
+        await flutterTts.setSpeechRate(0.4);
+        await flutterTts.setPitch(1.0);
+        await flutterTts.speak(yanit);
+      } else {
+        print("Hata kodu: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Bağlantı hatası: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +65,6 @@ class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
     return Scaffold(
       body: Stack(
         children: [
-
           Image.asset(
             "resimler/OkumaMetniSayfasiArkaPlan.png",
             width: ekranGenisligi,
@@ -41,37 +76,38 @@ class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
             top: 15,
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios_new_outlined),
-              onPressed: (){
-                
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BolumlerSayfasi()));
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BolumlerSayfasi()),
+                );
               },
             ),
           ),
           Positioned(
-            left: ekranGenisligi/2-125,
-            bottom: ekranYuksekligi/2.1,
+            left: ekranGenisligi / 2 - 125,
+            bottom: ekranYuksekligi / 2.1,
             child: AnimatedTkol(),
           ),
-
           Positioned(
-            left: ekranGenisligi/2-250,
+            left: ekranGenisligi / 2 - 250,
             top: 100,
             child: SizedBox(
-                width: 250,
-                child: TMaskot()),
+              width: 250,
+              child: TMaskot(),
+            ),
           ),
-
-
           Positioned(
-            left: ekranGenisligi/2,
-            top: ekranYuksekligi/3,
+            left: ekranGenisligi / 2,
+            top: ekranYuksekligi / 3,
             child: Column(
               children: [
                 ElevatedButton(
-
-                  child: Text("Kelime Türetmece Oynayalım",style: TextStyle(color: Colors.black),),
-                  onPressed: (){
-                  },
+                  child: Text(
+                    "Kelime Türetmece Oynayalım",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: kelimeTuretChatbot,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white70,
                     shape: RoundedRectangleBorder(
@@ -80,9 +116,11 @@ class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
                   ),
                 ),
                 ElevatedButton(
-                  child: Text("Tabu Oynayalım",style: TextStyle(color: Colors.black),),
-                  onPressed: (){
-                  },
+                  child: Text(
+                    "Tabu Oynayalım",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white70,
                     shape: RoundedRectangleBorder(
@@ -91,19 +129,21 @@ class _HarfTanimaSayfasiState extends State<HarfTanimaSayfasi> {
                   ),
                 ),
                 ElevatedButton(
-                  child: Text("Hikaye Dinlemek İstiyorum",style: TextStyle(color: Colors.black),),
-                  onPressed: (){
-                  },style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white70,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  child: Text(
+                    "Hikaye Dinlemek İstiyorum",
+                    style: TextStyle(color: Colors.black),
                   ),
-                ),
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white70,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -351,5 +391,3 @@ class _AnimatedTkolState extends State<AnimatedTkol> with SingleTickerProviderSt
   }
 
 }
-
-

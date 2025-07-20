@@ -43,6 +43,7 @@ dependencies:
   dio: ^5.3.2  
   flutter_tts: ^3.8.2
   sign_in_with_apple: ^7.0.1
+  speech_to_text: ^6.3.0
 
 
   # The following adds the Cupertino Icons font to your application.
